@@ -11,6 +11,7 @@ import org.springframework.web.filter.CorsFilter;
 
 import com.cos.jwt.filter.MyFilter1;
 import com.cos.jwt.filter.MyFilter3;
+import com.cos.jwt.jwt.jwtAthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.addFilter(corsFilter) // @CrossOrigin(인증X), 시큐리티 필터에 등록(인증O)
 		.formLogin().disable()
 		.httpBasic().disable()
+		.addFilter(new jwtAthenticationFilter(authenticationManager())) // AuthenticationManager
 		.authorizeRequests()
 		.antMatchers("/api/v1/user/**")
 		.access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
